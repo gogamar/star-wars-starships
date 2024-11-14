@@ -4,20 +4,24 @@ import axios from "axios";
 const API_URL_1 = import.meta.env.VITE_API_URL_1;
 const API_URL_2 = import.meta.env.VITE_API_URL_2;
 
-// Async thunk to fetch starships
+// Async thunk to fetch starships list (pagination supported)
 export const fetchStarships = createAsyncThunk(
   "starships/fetchStarships",
-  async (_, { rejectWithValue }) => {
+  async (next, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${API_URL_1}?page=1`);
+      const response = next
+        ? await axios.get(next)
+        : await axios.get(`${API_URL_1}?page=1`);
       return response.data;
     } catch (error) {
       console.error("API 1 failed:", error);
       try {
-        const response = await axios.get(`${API_URL_2}?page=1`);
+        const response = next
+          ? await axios.get(next)
+          : await axios.get(`${API_URL_2}?page=1`);
         return response.data;
       } catch (error) {
-        console.error("API 2 also failed:", error);
+        console.error("API 2 failed:", error);
         return rejectWithValue("Failed to fetch starships from both APIs.");
       }
     }
@@ -75,7 +79,7 @@ const starshipSlice = createSlice({
           );
           state.list.push(...uniqueStarships);
           state.loadedUrls.push(...uniqueStarships.map((s) => s.url));
-          state.nextUrl = action.payload.next;
+          state.next = action.payload.next;
         }
       })
       .addCase(fetchStarships.rejected, (state, action) => {

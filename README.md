@@ -48,10 +48,7 @@ A React-based web app that displays information about Star Wars starships using 
 
 #### **Exercise 3: "View More" Button**
 
-- Implement a "View More" button to load more starships from the server.
-- Display more starships when the button is clicked.
-
-**Bonus:** Implement **infinite scrolling** to load more starships as the user scrolls down.
+- Implement infinite scroll to load more starships from the server.
 
 #### **Exercise 4: Modernize the Site**
 
