@@ -5,18 +5,21 @@ import StarshipList from "../stories/StarshipList";
 
 const Starships = () => {
   const dispatch = useDispatch();
-  const starships = useSelector((state) => state.starships.list);
 
-  // Fetch starships on mount (first page)
+  const { list } = useSelector((state) => state.starships);
+
+  // Fetch starships on initial load
   useEffect(() => {
-    if (!starships.length) {
+    if (!list.length) {
       dispatch(fetchStarships(null));
     }
-  }, [dispatch, starships.length]);
+  }, [dispatch, list.length]);
+
+  console.log("starships", list.length);
 
   return (
     <div className="mb-6">
-      <StarshipList starships={starships} />
+      <StarshipList starships={list} />
     </div>
   );
 };

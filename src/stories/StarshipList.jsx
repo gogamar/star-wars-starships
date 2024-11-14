@@ -1,4 +1,14 @@
+import { useNavigate } from "react-router-dom";
+
 const StarshipList = ({ starships }) => {
+  const navigate = useNavigate();
+
+  const handleCardClick = (starshipId) => {
+    if (starshipId) {
+      navigate(`/starships/${starshipId}`);
+    }
+  };
+
   return (
     <div className="space-y-4 max-w-4xl mx-auto">
       {starships.map((starship) => {
@@ -8,7 +18,11 @@ const StarshipList = ({ starships }) => {
         if (!starshipId) return null;
 
         return (
-          <div key={starshipId} className="cursor-pointer">
+          <div
+            key={starshipId}
+            className="cursor-pointer"
+            onClick={() => handleCardClick(starshipId)}
+          >
             <div className="bg-gray-900 bg-opacity-50 hover:bg-opacity-70 transition-all duration-300 p-4 cursor-pointer w-full">
               <h2 className="text-gray-200 text-lg uppercase tracking-wider">
                 {starship.name}

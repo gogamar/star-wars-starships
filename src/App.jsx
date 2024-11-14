@@ -5,6 +5,7 @@ import Navbar from "./stories/Navbar";
 import ProgressBar from "./stories/ProgressBar";
 
 import Starships from "./pages/Starships";
+import StarshipDetails from "./pages/StarshipDetails";
 
 import "./index.css";
 
@@ -23,6 +24,7 @@ function App() {
       )}
       <Routes>
         <Route path="/starships" element={<Starships />} />
+        <Route path="/starships/:id" element={<StarshipDetails />} />
       </Routes>
     </Router>
   );
