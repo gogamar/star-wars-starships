@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import Navbar from "./stories/Navbar";
 import ProgressBar from "./stories/ProgressBar";
 
+import Home from "./pages/Home";
 import Starships from "./pages/Starships";
 import StarshipDetails from "./pages/StarshipDetails";
 
@@ -23,6 +24,7 @@ function App() {
         </div>
       )}
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/starships" element={<Starships />} />
         <Route path="/starships/:id" element={<StarshipDetails />} />
       </Routes>
