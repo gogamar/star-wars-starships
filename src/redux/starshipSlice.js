@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL_1 = import.meta.env.VITE_API_URL_1;
-const API_URL_2 = import.meta.env.VITE_API_URL_2;
+const SWAPI_1 = import.meta.env.VITE_SWAPI_1;
+const SWAPI_2 = import.meta.env.VITE_SWAPI_2;
 
 // Async thunk to fetch starships list (pagination supported)
 export const fetchStarships = createAsyncThunk(
@@ -11,14 +11,14 @@ export const fetchStarships = createAsyncThunk(
     try {
       const response = next
         ? await axios.get(next)
-        : await axios.get(`${API_URL_1}?page=1`);
+        : await axios.get(`${SWAPI_1}?page=1`);
       return response.data;
     } catch (error) {
       console.error("API 1 failed:", error);
       try {
         const response = next
           ? await axios.get(next)
-          : await axios.get(`${API_URL_2}?page=1`);
+          : await axios.get(`${SWAPI_2}?page=1`);
         return response.data;
       } catch (error) {
         console.error("API 2 failed:", error);
@@ -33,12 +33,12 @@ export const fetchStarshipDetails = createAsyncThunk(
   "starships/fetchStarshipDetails",
   async (starshipId, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${API_URL_1}/${starshipId}/`);
+      const response = await axios.get(`${SWAPI_1}/${starshipId}/`);
       return response.data;
     } catch (error) {
       console.error("API 1 failed:", error);
       try {
-        const response = await axios.get(`${API_URL_2}/${starshipId}/`);
+        const response = await axios.get(`${SWAPI_2}/${starshipId}/`);
         return response.data;
       } catch (error) {
         console.error("API 2 also failed:", error);

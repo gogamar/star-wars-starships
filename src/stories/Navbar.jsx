@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -11,17 +10,7 @@ import {
 import Button from "./Button";
 
 const Navbar = ({ user = null, onLogin, onLogout, onCreateAccount }) => {
-  const [activeLink, setActiveLink] = useState("");
-  const location = useLocation(); // To get the current route
-
-  useEffect(() => {
-    // Set activeLink based on the current path when the component mounts
-    setActiveLink(location.pathname);
-  }, [location.pathname]); // This will run whenever the location changes
-
-  const handleLinkClick = (link) => {
-    setActiveLink(link);
-  };
+  const location = useLocation();
 
   return (
     <nav className="bg-black text-white">
@@ -132,18 +121,18 @@ const Navbar = ({ user = null, onLogin, onLogout, onCreateAccount }) => {
           <Link
             to="/"
             className={`text-gray-400 hover:text-white px-6 py-3 border-x border-gray-800 transition-colors duration-200 ${
-              activeLink === "/" ? "border-b-2 border-b-blue-500" : ""
+              location.pathname === "/" ? "border-b-2 border-b-blue-500" : ""
             }`}
-            onClick={() => handleLinkClick("/")}
           >
             HOME
           </Link>
           <Link
             to="/starships"
             className={`text-gray-400 hover:text-white px-6 py-3 border-e border-gray-800 transition-colors duration-200 ${
-              activeLink === "/starships" ? "border-b-2 border-b-blue-500" : ""
+              location.pathname === "/starships"
+                ? "border-b-2 border-b-blue-500"
+                : ""
             }`}
-            onClick={() => handleLinkClick("/starships")}
           >
             STARSHIPS
           </Link>
