@@ -1,49 +1,54 @@
-import { fn } from '@storybook/test';
+import React from "react";
+import Button from "./Button";
+import { CheckCircleIcon } from "@heroicons/react/24/solid";
 
-import { Button } from './Button';
-
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
+// Storybook metadata
 export default {
-  title: 'Example/Button',
+  title: "Components/Button",
   component: Button,
-  parameters: {
-    // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
-    layout: 'centered',
-  },
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
-  tags: ['autodocs'],
-  // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {
-    backgroundColor: { control: 'color' },
-  },
-  // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
-  args: { onClick: fn() },
-};
-
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const Primary = {
-  args: {
-    primary: true,
-    label: 'Button',
+    backgroundColor: { control: "color" },
+    label: { control: "text" },
+    icon: { control: "boolean" },
+    loading: { control: "boolean" },
+    onClick: { action: "clicked" },
   },
 };
 
-export const Secondary = {
-  args: {
-    label: 'Button',
-  },
+// Template to create stories with arguments
+const Template = (args) => <Button {...args} />;
+
+// Default Button Story
+export const Default = Template.bind({});
+Default.args = {
+  label: "Button",
 };
 
-export const Large = {
-  args: {
-    size: 'large',
-    label: 'Button',
-  },
+// Button with Custom Background Color
+export const WithBackgroundColor = Template.bind({});
+WithBackgroundColor.args = {
+  label: "Custom Background",
+  backgroundColor: "#4CAF50", // Example color
 };
 
-export const Small = {
-  args: {
-    size: 'small',
-    label: 'Button',
-  },
+// Button with Icon
+export const WithIcon = Template.bind({});
+WithIcon.args = {
+  label: "Button with Icon",
+  icon: true,
+};
+
+// Button in Loading State
+export const Loading = Template.bind({});
+Loading.args = {
+  label: "Loading...",
+  loading: true,
+};
+
+// Button with Icon and Custom Background Color
+export const WithIconAndBackground = Template.bind({});
+WithIconAndBackground.args = {
+  label: "Icon & Custom Background",
+  icon: true,
+  backgroundColor: "#2196F3",
 };
