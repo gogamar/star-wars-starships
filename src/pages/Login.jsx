@@ -1,11 +1,14 @@
 import { useState, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../redux/authSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from || "/";
 
   const { loading, error } = useSelector((state) => state.auth);
   const [email, setEmail] = useState("");
@@ -18,7 +21,8 @@ const Login = () => {
       dispatch(loginUser({ email, password }))
         .unwrap()
         .then(() => {
-          navigate("/", { replace: true });
+          // Redirect to the page they originally wanted to visit
+          navigate(from, { replace: true });
         })
         .catch((err) => {
           console.error("Login failed:", err);

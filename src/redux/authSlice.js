@@ -54,7 +54,7 @@ export const loginUser = createAsyncThunk(
       }
 
       // Access users from the current state
-      const users = getState().users.users; // Ensure users are loaded in state
+      const users = getState().users.users;
       const user = users.find((u) => u.email === email);
 
       // Save token and email to localStorage

@@ -1,15 +1,15 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchStarshipDetails } from "../redux/starshipsSlice";
+import { fetchStarshipDetails } from "../redux/starshipDetailsSlice";
 import StarshipCard from "../stories/StarshipCard";
 
 const StarshipDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const { selectedStarship, detailsStatus, error } = useSelector(
-    (state) => state.starships
+  const { selectedStarship, error } = useSelector(
+    (state) => state.starshipDetails
   );
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const StarshipDetails = () => {
     }
   }, [id, dispatch]);
 
-  if (detailsStatus === "failed") {
+  if (error) {
     return <p>Error: {error}</p>;
   }
 

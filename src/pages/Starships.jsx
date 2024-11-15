@@ -1,6 +1,6 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchStarships } from "../redux/starshipsSlice";
+import { fetchStarships } from "../redux/starshipsListSlice";
 import StarshipList from "../stories/StarshipList";
 
 const Starships = () => {
@@ -9,13 +9,6 @@ const Starships = () => {
   const { list, next } = useSelector((state) => state.starships);
 
   const observer = useRef();
-
-  // Fetch starships on initial load
-  useEffect(() => {
-    if (!list.length) {
-      dispatch(fetchStarships(null));
-    }
-  }, [dispatch, list.length]);
 
   // Fetch more starships when the last element comes into view
   const lastStarshipElementRef = useCallback(

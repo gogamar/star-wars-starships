@@ -6,7 +6,7 @@ const SWAPI_2 = import.meta.env.VITE_SWAPI_2;
 
 // Async thunk to fetch starships list (pagination supported)
 export const fetchStarships = createAsyncThunk(
-  "starships/fetchStarships",
+  "starshipsList/fetchStarships",
   async (next, { rejectWithValue }) => {
     try {
       const response = next
@@ -28,34 +28,12 @@ export const fetchStarships = createAsyncThunk(
   }
 );
 
-// Async thunk to fetch starship details
-export const fetchStarshipDetails = createAsyncThunk(
-  "starships/fetchStarshipDetails",
-  async (starshipId, { rejectWithValue }) => {
-    try {
-      const response = await axios.get(`${SWAPI_1}/${starshipId}/`);
-      return response.data;
-    } catch (error) {
-      console.error("API 1 failed:", error);
-      try {
-        const response = await axios.get(`${SWAPI_2}/${starshipId}/`);
-        return response.data;
-      } catch (error) {
-        console.error("API 2 also failed:", error);
-        return rejectWithValue("Failed to fetch starship details.");
-      }
-    }
-  }
-);
-
-// Slice for starship state
-const starshipsSlice = createSlice({
-  name: "starships",
+// Slice for starships list state
+const starshipsListSlice = createSlice({
+  name: "starshipsList",
   initialState: {
     list: [],
-    selectedStarship: null,
-    listStatus: "idle",
-    detailsStatus: "idle",
+    loading: false,
     error: null,
     next: null,
     loadedUrls: [],
@@ -63,14 +41,13 @@ const starshipsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // For list fetching
       .addCase(fetchStarships.pending, (state) => {
-        state.listStatus = "loading";
+        state.loading = true;
       })
       .addCase(fetchStarships.fulfilled, (state, action) => {
-        state.listStatus = "succeeded";
+        state.loading = false;
         const newStarships = action.payload.results;
-
+        // Avoiding duplicate starships
         if (newStarships.length === 0) {
           state.next = null;
         } else {
@@ -83,23 +60,10 @@ const starshipsSlice = createSlice({
         }
       })
       .addCase(fetchStarships.rejected, (state, action) => {
-        state.listStatus = "failed";
-        state.error = action.payload || action.error.message;
-      })
-
-      // For fetching starship details
-      .addCase(fetchStarshipDetails.pending, (state) => {
-        state.detailsStatus = "loading";
-      })
-      .addCase(fetchStarshipDetails.fulfilled, (state, action) => {
-        state.detailsStatus = "succeeded";
-        state.selectedStarship = action.payload;
-      })
-      .addCase(fetchStarshipDetails.rejected, (state, action) => {
-        state.detailsStatus = "failed";
+        state.loading = false;
         state.error = action.payload || action.error.message;
       });
   },
 });
 
-export default starshipsSlice.reducer;
+export default starshipsListSlice.reducer;

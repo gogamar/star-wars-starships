@@ -7,6 +7,9 @@ const Signup = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Accessing a specific slice of the state
+  const users = useSelector((state) => state.users.users);
+
   const { loading, error } = useSelector((state) => state.auth);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -47,16 +50,27 @@ const Signup = () => {
               Email address
             </label>
             <div className="mt-2">
-              <input
+              {/* Since reqres only allows predefined emails to be registered... */}
+              <select
                 id="email"
                 name="email"
-                type="email"
                 required
-                autoComplete="off"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-blue-500 sm:text-sm px-2"
-              />
+              >
+                {/* Default placeholder option */}
+                <option value="" disabled>
+                  Select an email
+                </option>
+
+                {/* Map through users and create an option for each email */}
+                {users.map((user) => (
+                  <option key={user.id} value={user.email}>
+                    {user.email}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
