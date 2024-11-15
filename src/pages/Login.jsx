@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../redux/authSlice";
-import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -11,18 +11,22 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
 
-    dispatch(loginUser({ email, password }))
-      .unwrap()
-      .then(() => {
-        navigate("/");
-      })
-      .catch(() => {
-        alert("Failed to login. Please check your credentials.");
-      });
-  };
+      dispatch(loginUser({ email, password }))
+        .unwrap()
+        .then(() => {
+          navigate("/", { replace: true });
+        })
+        .catch((err) => {
+          console.error("Login failed:", err);
+          alert("Failed to login. Please check your credentials.");
+        });
+    },
+    [dispatch, email, password, navigate]
+  );
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -90,7 +94,11 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="flex w-full justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+              className={`flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 ${
+                loading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-500 hover:bg-blue-400"
+              }`}
             >
               {loading ? "Signing in..." : "Sign in"}
             </button>
@@ -98,7 +106,12 @@ const Login = () => {
         </form>
 
         {error && (
-          <p className="mt-4 text-center text-sm text-red-500">{error}</p>
+          <p
+            className="mt-4 text-center text-sm text-red-500"
+            aria-live="polite"
+          >
+            {error}
+          </p>
         )}
 
         <p className="mt-10 text-center text-sm text-gray-400">

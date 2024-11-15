@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchStarshipDetails } from "../redux/starshipSlice";
+import { fetchStarshipDetails } from "../redux/starshipsSlice";
 import StarshipCard from "../stories/StarshipCard";
 
 const StarshipDetails = () => {

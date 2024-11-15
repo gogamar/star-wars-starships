@@ -1,6 +1,6 @@
 import { useEffect, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchStarships } from "../redux/starshipSlice";
+import { fetchStarships } from "../redux/starshipsSlice";
 import StarshipList from "../stories/StarshipList";
 
 const Starships = () => {

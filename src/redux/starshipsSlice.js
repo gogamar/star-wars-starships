@@ -49,7 +49,7 @@ export const fetchStarshipDetails = createAsyncThunk(
 );
 
 // Slice for starship state
-const starshipSlice = createSlice({
+const starshipsSlice = createSlice({
   name: "starships",
   initialState: {
     list: [],
@@ -102,4 +102,4 @@ const starshipSlice = createSlice({
   },
 });
 
-export default starshipSlice.reducer;
+export default starshipsSlice.reducer;

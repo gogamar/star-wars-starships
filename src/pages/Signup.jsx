@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signupUser } from "../redux/authSlice";
 import { useNavigate } from "react-router-dom";
@@ -11,18 +11,22 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
 
-    dispatch(signupUser({ email, password }))
-      .unwrap()
-      .then(() => {
-        navigate("/login");
-      })
-      .catch(() => {
-        alert("Failed to sign up. Please check your details.");
-      });
-  };
+      dispatch(signupUser({ email, password }))
+        .unwrap()
+        .then(() => {
+          navigate("/", { replace: true });
+        })
+        .catch((err) => {
+          console.error("Signup failed:", err);
+          alert("Failed to sign up. Please try again.");
+        });
+    },
+    [dispatch, email, password, navigate]
+  );
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -58,14 +62,12 @@ const Signup = () => {
 
           {/* Password Input */}
           <div>
-            <div className="flex items-center justify-between">
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-white"
-              >
-                Password
-              </label>
-            </div>
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-white"
+            >
+              Password
+            </label>
             <div className="mt-2">
               <input
                 id="password"
@@ -85,17 +87,28 @@ const Signup = () => {
             <button
               type="submit"
               disabled={loading}
-              className="flex w-full justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+              className={`flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 ${
+                loading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-500 hover:bg-blue-400"
+              }`}
             >
               {loading ? "Creating account..." : "Sign Up"}
             </button>
           </div>
         </form>
 
+        {/* Error Message */}
         {error && (
-          <p className="mt-4 text-center text-sm text-red-500">{error}</p>
+          <p
+            className="mt-4 text-center text-sm text-red-500"
+            aria-live="polite"
+          >
+            {error}
+          </p>
         )}
 
+        {/* Redirect to Login */}
         <p className="mt-10 text-center text-sm text-gray-400">
           Already a member?{" "}
           <a
