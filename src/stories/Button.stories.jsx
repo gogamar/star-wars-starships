@@ -1,6 +1,5 @@
-import React from "react";
 import Button from "./Button";
-import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import "./button.css";
 
 // Storybook metadata
 export default {

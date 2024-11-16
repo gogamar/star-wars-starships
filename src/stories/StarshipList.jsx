@@ -3,6 +3,17 @@ import { useNavigate } from "react-router-dom";
 const StarshipList = ({ starships }) => {
   const navigate = useNavigate();
 
+  const extractStarshipId = (url) => {
+    try {
+      const parts = url.split("/").filter((part) => part.length > 0);
+      const id = parts[parts.length - 1];
+      // Ensure the ID is numeric
+      return /^\d+$/.test(id) ? id : null;
+    } catch {
+      return null;
+    }
+  };
+
   const handleCardClick = (starshipId) => {
     if (starshipId) {
       navigate(`/starships/${starshipId}`);
@@ -12,10 +23,11 @@ const StarshipList = ({ starships }) => {
   return (
     <div className="space-y-4 max-w-4xl mx-auto">
       {starships.map((starship) => {
-        const parts = starship.url.split("/");
-        const starshipId = parts[parts.length - 2];
+        const starshipId = extractStarshipId(starship.url);
 
-        if (!starshipId) return null;
+        if (!starshipId) {
+          return null;
+        }
 
         return (
           <div

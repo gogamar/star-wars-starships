@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import "./button.css";
 
 const Button = ({
