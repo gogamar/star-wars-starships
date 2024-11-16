@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchStarshipDetails } from "../redux/starshipDetailsSlice";
 import StarshipCard from "../stories/StarshipCard";
+import List from "../stories/List";
 
 const StarshipDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const { selectedStarship, error } = useSelector(
+  const { selectedStarship, pilots, error } = useSelector(
     (state) => state.starshipDetails
   );
 
@@ -50,6 +51,9 @@ const StarshipDetails = () => {
           </div>
         </div>
       </div>
+      {pilots.length > 0 && <List elements={pilots} title="PILOTS" />}
+
+      {error && <p>Error: {error}</p>}
     </>
   );
 };
