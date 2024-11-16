@@ -9,7 +9,7 @@ const StarshipDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const { selectedStarship, pilots, error } = useSelector(
+  const { selectedStarship, pilots, films, error } = useSelector(
     (state) => state.starshipDetails
   );
 
@@ -52,6 +52,7 @@ const StarshipDetails = () => {
         </div>
       </div>
       {pilots.length > 0 && <List elements={pilots} title="PILOTS" />}
+      {films.length > 0 && <List elements={films} title="FILMS" />}
 
       {error && <p>Error: {error}</p>}
     </>

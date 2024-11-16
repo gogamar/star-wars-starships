@@ -12,6 +12,7 @@ export const fetchStarshipDetails = createAsyncThunk(
       const response = await axios.get(`${SWAPI_1}/${starshipId}/`);
       const starship = response.data;
 
+      // Fetch pilot details
       const pilotDetails = await Promise.all(
         starship.pilots.map(async (pilotUrl) => {
           const pilotResponse = await axios.get(pilotUrl);
@@ -23,7 +24,19 @@ export const fetchStarshipDetails = createAsyncThunk(
         })
       );
 
-      return { starship, pilots: pilotDetails };
+      // Fetch film details
+      const filmDetails = await Promise.all(
+        starship.films.map(async (filmUrl) => {
+          const filmResponse = await axios.get(filmUrl);
+          const film = filmResponse.data;
+
+          // Get the film ID from the URL
+          const filmId = filmUrl.match(/\/films\/(\d+)\//)?.[1];
+          return { ...film, id: filmId };
+        })
+      );
+
+      return { starship, pilots: pilotDetails, films: filmDetails };
     } catch (error) {
       console.error("API 1 failed:", error);
       try {
@@ -31,12 +44,26 @@ export const fetchStarshipDetails = createAsyncThunk(
         const starship = response.data;
 
         const pilotDetails = await Promise.all(
-          starship.pilots.map((pilotUrl) =>
-            axios.get(pilotUrl).then((res) => res.data)
-          )
+          starship.pilots.map(async (pilotUrl) => {
+            const pilotResponse = await axios.get(pilotUrl);
+            const pilot = pilotResponse.data;
+
+            const pilotId = pilotUrl.match(/\/people\/(\d+)\//)?.[1];
+            return { ...pilot, id: pilotId };
+          })
         );
 
-        return { starship, pilots: pilotDetails };
+        const filmDetails = await Promise.all(
+          starship.films.map(async (filmUrl) => {
+            const filmResponse = await axios.get(filmUrl);
+            const film = filmResponse.data;
+
+            const filmId = filmUrl.match(/\/films\/(\d+)\//)?.[1];
+            return { ...film, id: filmId };
+          })
+        );
+
+        return { starship, pilots: pilotDetails, films: filmDetails };
       } catch (error) {
         console.error("API 2 also failed:", error);
         return rejectWithValue("Failed to fetch starship details.");
@@ -51,6 +78,7 @@ const starshipDetailsSlice = createSlice({
   initialState: {
     selectedStarship: null,
     pilots: [],
+    films: [],
     loading: false,
     error: null,
   },
@@ -61,11 +89,13 @@ const starshipDetailsSlice = createSlice({
         state.loading = true;
         state.error = null;
         state.pilots = []; // Clear pilots when loading new details
+        state.films = []; // Clear films when loading new details
       })
       .addCase(fetchStarshipDetails.fulfilled, (state, action) => {
         state.loading = false;
         state.selectedStarship = action.payload.starship;
         state.pilots = action.payload.pilots;
+        state.films = action.payload.films;
       })
       .addCase(fetchStarshipDetails.rejected, (state, action) => {
         state.loading = false;
