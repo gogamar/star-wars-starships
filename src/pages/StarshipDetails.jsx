@@ -4,12 +4,13 @@ import { useParams } from "react-router-dom";
 import { fetchStarshipDetails } from "../redux/starshipDetailsSlice";
 import StarshipCard from "../stories/StarshipCard";
 import List from "../stories/List";
+import Spinner from "../stories/Spinner";
 
 const StarshipDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const { selectedStarship, pilots, films, error } = useSelector(
+  const { selectedStarship, pilots, films, error, loading } = useSelector(
     (state) => state.starshipDetails
   );
 
@@ -46,13 +47,22 @@ const StarshipDetails = () => {
             {selectedStarship ? (
               <StarshipCard selectedStarship={selectedStarship} />
             ) : (
-              <p>Loading Starship Details...</p>
+              loading && (
+                <div
+                  className="flex flex-col justify-center mt-4"
+                  aria-live="polite"
+                >
+                  <Spinner isLoading={loading} />
+                  <br />
+                  <p>Loading Starship Details...</p>
+                </div>
+              )
             )}
           </div>
         </div>
+        {pilots.length > 0 && <List elements={pilots} title="PILOTS" />}
+        {films.length > 0 && <List elements={films} title="FILMS" />}
       </div>
-      {pilots.length > 0 && <List elements={pilots} title="PILOTS" />}
-      {films.length > 0 && <List elements={films} title="FILMS" />}
 
       {error && <p>Error: {error}</p>}
     </>

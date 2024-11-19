@@ -4,7 +4,7 @@ import "./button.css";
 const Button = ({
   backgroundColor = null,
   label,
-  iconComponent: IconComponent = null, // Default icon is null, so it won’t be shown if not passed
+  iconComponent: IconComponent = null,
   loading = false,
   ...props
 }) => {

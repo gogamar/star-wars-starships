@@ -1,14 +1,22 @@
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchStarships } from "../redux/starshipsListSlice";
 import StarshipList from "../stories/StarshipList";
+import Spinner from "../stories/Spinner";
 
 const Starships = () => {
   const dispatch = useDispatch();
 
-  const { list, next } = useSelector((state) => state.starships);
+  const { list, next, loading } = useSelector((state) => state.starships);
 
   const observer = useRef();
+
+  // Fetch starships on initial load
+  useEffect(() => {
+    if (!list.length) {
+      dispatch(fetchStarships(null));
+    }
+  }, [dispatch, list.length]);
 
   // Fetch more starships when the last element comes into view
   const lastStarshipElementRef = useCallback(
@@ -31,7 +39,12 @@ const Starships = () => {
   console.log("starships", list.length);
 
   return (
-    <div className="mb-6">
+    <div className="my-6">
+      {loading && (
+        <div className="flex justify-center mt-4" aria-live="polite">
+          <Spinner isLoading={loading} />
+        </div>
+      )}
       <StarshipList starships={list} />
 
       {/* Observer for triggering infinite scroll */}

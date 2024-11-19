@@ -1,17 +1,17 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { signupUser, resetError } from "../redux/authSlice";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser, resetError } from "../redux/authSlice";
 
-const SignUp = () => {
+const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [feedback, setFeedback] = useState({ email: "", password: "" });
-  const { loading, error } = useSelector((state) => state.auth);
 
+  const { user, loading, error } = useSelector((state) => state.auth);
   const from = location.state?.from?.pathname || "/";
 
   // Generic field validator
@@ -20,8 +20,7 @@ const SignUp = () => {
       /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(value)
         ? ""
         : "Invalid email format.",
-    password: (value) =>
-      value.length >= 6 ? "" : "Password must be at least 6 characters.",
+    password: (value) => (value.length > 0 ? "" : "Password cannot be empty."),
   };
 
   const handleChange = (e) => {
@@ -50,18 +49,25 @@ const SignUp = () => {
       return;
     }
 
-    dispatch(signupUser(formData.email, formData.password, navigate, from));
+    dispatch(loginUser(formData.email, formData.password, navigate, from));
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate(from, { replace: true });
+    }
+  }, [user, navigate, from]);
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 className="mt-10 text-center text-2xl font-bold tracking-tight text-white">
-          Create your account
+          Sign in to your account
         </h2>
       </div>
 
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        {/* Reserved space for general error messages */}
         <div className="h-6 my-5">
           {error && (
             <p
@@ -93,6 +99,7 @@ const SignUp = () => {
                   className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-yellow-500 sm:text-sm px-2"
                 />
               </div>
+              {/* Reserved space for field-specific feedback */}
               <div className="h-6">
                 {feedback[field] && (
                   <p
@@ -119,18 +126,18 @@ const SignUp = () => {
                   : "bg-yellow-500 hover:bg-yellow-400"
               }`}
             >
-              {loading ? "Hang on..." : "Sign Up"}
+              {loading ? "Signing in..." : "Sign in"}
             </button>
           </div>
         </form>
 
         <p className="mt-2 text-center text-sm text-gray-400">
-          Already a member?{" "}
+          Not a member?{" "}
           <a
-            href="/login"
+            href="/signup"
             className="font-semibold text-yellow-400 hover:text-yellow-300"
           >
-            Sign in here
+            Sign up
           </a>
         </p>
       </div>
@@ -138,4 +145,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;
