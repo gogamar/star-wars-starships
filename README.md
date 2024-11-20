@@ -19,13 +19,34 @@ git clone https://github.com/gogamar/star-wars-starships.git
 cd star-wars-starships
 ```
 
-### 2. Install Dependencies
+# 2. Add .env
+
+Add `.env` to the root of the project
+
+```bash
+touch .env
+```
+
+and fill in the values:
+
+```
+VITE_SWAPI_1=
+VITE_SWAPI_2=
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_STORAGE_BUCKET=
+VITE_FIREBASE_MESSAGING_SENDER_ID=
+VITE_FIREBASE_APP_ID=
+```
+
+### 3. Install Dependencies
 
 ```bash
 npm install
 ```
 
-### 3. Run the Development Server
+### 4. Run the Development Server
 
 ```bash
 npm run dev
@@ -33,7 +54,7 @@ npm run dev
 
 Open your browser and navigate to `http://localhost:5173`
 
-### 4. Run the storybook
+### 5. Run Storybook
 
 ```bash
 npm run storybook
@@ -41,7 +62,7 @@ npm run storybook
 
 Open your browser and navigate to `http://localhost:6006`
 
-### 5. Run Tests
+### 6. Run Tests
 
 ```bash
 npm run test
