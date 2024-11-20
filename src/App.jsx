@@ -5,7 +5,7 @@ import Navbar from "./stories/Navbar";
 import ProgressBar from "./stories/ProgressBar";
 
 import Login from "./pages/SignIn";
-import Signup from "./pages/SignUp";
+import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import Starships from "./pages/Starships";
 import StarshipDetails from "./pages/StarshipDetails";
@@ -35,7 +35,7 @@ function App() {
           <Route path="/starships/:id" element={<StarshipDetails />} />
         </Route>
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/signup" element={<SignUp />} />
       </Routes>
     </Router>
   );
