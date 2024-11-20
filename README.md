@@ -19,7 +19,7 @@ git clone https://github.com/gogamar/star-wars-starships.git
 cd star-wars-starships
 ```
 
-# 2. Add .env
+### 2. Add .env
 
 Add `.env` to the root of the project
 
