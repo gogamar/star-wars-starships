@@ -1,9 +1,10 @@
+import "./card.css";
+
 const Card = ({ element }) => {
   const isPilot = element.name !== undefined;
 
   return (
-    <div className="overflow-hidden rounded-lg bg-gray-900 shadow">
-      {/* Image Section */}
+    <div className="overflow-hidden rounded-lg bg-gray-900 shadow relative pb-6">
       <div className="relative">
         <img
           src={`https://starwars-visualguide.com/assets/img/${
@@ -15,8 +16,7 @@ const Card = ({ element }) => {
         <div className="absolute bottom-0 w-full border-b-4 border-red-500"></div>
       </div>
 
-      {/* Details Section */}
-      <div className="bg-gray-900 px-4 py-4 sm:px-6 text-center">
+      <div className="bg-gray-900 px-4 pt-4 pb-2 sm:px-6 text-center">
         {isPilot ? (
           <span className="text-gray-500 uppercase font-bold">
             {element.name}
@@ -28,6 +28,10 @@ const Card = ({ element }) => {
             <span>Episode {element.episode_id}</span>
           </div>
         )}
+      </div>
+      <div className="rectangle-container">
+        <div className="rectangle"></div>
+        <div className="rectangle-overlay"></div>
       </div>
     </div>
   );

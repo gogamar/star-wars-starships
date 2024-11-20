@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const SWAPI_1 = import.meta.env.VITE_SWAPI_1;
 const SWAPI_2 = import.meta.env.VITE_SWAPI_2;

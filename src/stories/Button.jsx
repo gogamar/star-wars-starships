@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import "./button.css";
 
 const Button = ({
   backgroundColor = null,
@@ -31,7 +30,7 @@ const Button = ({
 Button.propTypes = {
   backgroundColor: PropTypes.string,
   label: PropTypes.string.isRequired,
-  iconComponent: PropTypes.elementType, // Allow custom icon component to be passed
+  iconComponent: PropTypes.elementType,
   loading: PropTypes.bool,
   onClick: PropTypes.func,
 };

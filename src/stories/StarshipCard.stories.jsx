@@ -1,15 +1,12 @@
 import StarshipCard from "./StarshipCard";
 
-// Default export to define component and metadata
 export default {
   title: "Components/StarshipCard",
   component: StarshipCard,
 };
 
-// Template function to render the component with args
 const Template = (args) => <StarshipCard {...args} />;
 
-// Example data for a sample starship
 const exampleStarship = {
   name: "X-Wing",
   starship_class: "Starfighter",
@@ -23,7 +20,6 @@ const exampleStarship = {
   crew: "1",
 };
 
-// Primary story using the example data
 export const Primary = Template.bind({});
 Primary.args = {
   selectedStarship: exampleStarship,

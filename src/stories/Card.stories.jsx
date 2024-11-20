@@ -1,6 +1,5 @@
 import Card from "./Card";
 
-// Storybook metadata
 export default {
   title: "Components/Card",
   component: Card,
@@ -12,10 +11,8 @@ export default {
   },
 };
 
-// Template to render the Card component
 const Template = (args) => <Card {...args} />;
 
-// Story for a Pilot Card
 export const PilotCard = Template.bind({});
 PilotCard.args = {
   element: {
@@ -24,7 +21,6 @@ PilotCard.args = {
   },
 };
 
-// Story for a Film Card
 export const FilmCard = Template.bind({});
 FilmCard.args = {
   element: {
@@ -34,7 +30,6 @@ FilmCard.args = {
   },
 };
 
-// Story for a Missing Data Card
 export const MissingDataCard = Template.bind({});
 MissingDataCard.args = {
   element: {

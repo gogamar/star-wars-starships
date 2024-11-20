@@ -14,7 +14,6 @@ const SignUp = () => {
 
   const from = location.state?.from?.pathname || "/";
 
-  // Generic field validator
   const validators = {
     email: (value) =>
       /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(value)
@@ -27,7 +26,7 @@ const SignUp = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    setFeedback((prev) => ({ ...prev, [name]: "" })); // Clear feedback
+    setFeedback((prev) => ({ ...prev, [name]: "" }));
     dispatch(resetError());
   };
 

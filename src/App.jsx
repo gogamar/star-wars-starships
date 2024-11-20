@@ -1,8 +1,5 @@
-import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-
-import { checkUserAuth } from "./redux/authSlice";
+import { useSelector } from "react-redux";
 
 import Navbar from "./stories/Navbar";
 import ProgressBar from "./stories/ProgressBar";
@@ -17,15 +14,9 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 import "./index.css";
 
 function App() {
-  const dispatch = useDispatch();
   const isLoading = useSelector(
     (state) => state.starships.loading || state.starshipDetails.loading
   );
-
-  useEffect(() => {
-    // Run only on the initial load
-    dispatch(checkUserAuth());
-  }, [dispatch]);
 
   return (
     <Router>

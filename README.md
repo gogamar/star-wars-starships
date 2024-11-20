@@ -1,108 +1,118 @@
-# Star Wars Starships Web Application
+# Star Wars Starships Web Application 🚀🌌
 
-A React-based web app that displays information about Star Wars starships using data from the SWAPI (Star Wars API). This app includes features like listing starships, viewing detailed information, pagination, and user authentication.
+A modern React-based web application that brings the starships of the Star Wars universe to life! Built using SWAPI (Star Wars API).
 
-### Installation Instructions
+## ✨ Features
 
-1. **Clone the repository:**
+- Infinite scroll
+- User authentication with Firebase
+- Comprehensive starships listing
+- Detailed starship information
+- Pilot and movie appearance details
 
-   ```bash
-   git clone git@github.com:gogamar/star-wars.git
-   ```
+## 🚀 Quick Start
 
-2. **Navigate to the project directory:**
+### 1. Clone the Repository
 
-   ```bash
-   cd star-wars
-   ```
+```bash
+git clone https://github.com/gogamar/star-wars-starships.git
+cd star-wars-starships
+```
 
-3. **Install the required dependencies:**
+### 2. Install Dependencies
 
-   ```bash
-   npm install
-   ```
+```bash
+npm install
+```
 
-4. **Start the development server:**
+### 3. Run the Development Server
 
-   ```bash
-   npm run dev
-   ```
+```bash
+npm run dev
+```
 
-5. **Open the app in your browser:**
-   Visit `http://localhost:5173` to view the app.
+Open your browser and navigate to `http://localhost:5173`
 
----
+### 4. Run the storybook
 
-### Exercises Overview
+```bash
+npm run storybook
+```
 
-#### **Exercise 1: Display Starships List**
+Open your browser and navigate to `http://localhost:6006`
 
-- Implement the main screen to display a list of starships.
-- Show the name and model of each starship.
-- Use **Storybook** to create reusable components.
+### 5. Run Tests
 
-#### **Exercise 2: Starship Details**
+```bash
+npm run test
+```
 
-- Create a detailed view for each starship.
-- Users can click on a starship from the list to view more details.
+## 🎯 Project Milestones
 
-#### **Exercise 3: Infinite Scroll**
+### Exercise 1: Starships Listing
 
-- Implement infinite scroll to load more starships from the server.
+- Implement main screen with starships list
+- Display starship name and model
+- Use Storybook for component development
 
-#### **Exercise 4: Modernize the Site**
+### Exercise 2: Starship Details
 
-- Update the site's styles to resemble the official Star Wars website.
-- Focus on UI/UX improvements.
+- Create detailed view for individual starships
+- Enable navigation from list to detailed information
 
-#### **Exercise 5: Welcome Page and Navigation**
+### Exercise 3: Infinite Scroll
 
-- Add a welcome page with a button to navigate to the main starships list.
-- Implement React Routing for navigation.
-- Create a top navigation bar with links.
+- Implement seamless loading of additional starships
 
-#### **Exercise 6: User Authentication (Login & Registration)**
+### Exercise 4: Star Wars Style
 
-- Implement a login and registration page using a fake backend API ([ReqRes](https://reqres.in/)).
-- Ensure users can't register with the same email.
-- Redirect users to the correct page after login.
+- Redesign UI to match official Star Wars website aesthetic
 
-#### **Exercise 7: Protect Routes**
+### Exercise 5: Navigation
 
-- Protect the starships list route so only authenticated users can access it.
-- Redirect unauthenticated users to the login page.
+- Add welcome page
+- Implement React Router
+- Create responsive top navigation bar
 
-#### **Exercise 8: Show Pilots**
+### Exercise 6: Authentication
 
-- Enhance the starship details page to show pilot cards.
-- Create a new component to display pilot information for each starship.
+- Integrate Firebase for login and registration
+- Prevent duplicate email registrations
+- Implement intelligent redirect after login
 
-#### **Exercise 9: Show Movie Appearances**
+### Exercise 7: Route Protection
 
-- Display the movie cards where the starship has appeared.
+- Secure starships list route
+- Redirect unauthenticated users to login page
 
-#### **Exercise 10: Unit Tests**
+### Exercise 8: Pilot Information
 
-- Add unit tests for at least three components.
-- Ensure the app is robust and easy to maintain.
+- Enhance starship details with pilot cards
+- Create comprehensive pilot information component
 
----
+### Exercise 9: Movie Appearances
 
-### API Information
+- Display movie cards featuring each starship
 
-This project uses the SWAPI (Star Wars API) to fetch starships data. The following endpoints are useful:
+### Exercise 10: Testing
 
-- **Starships list:**
-  [SWAPI Starships List](https://swapi.dev/api/starships/)
+- Develop unit tests for 3 components
+- Ensure application reliability and maintainability
 
-- **Starships list with pagination:**
-  [SWAPI Pagination](https://swapi.dev/api/starships/?page=1)
+## 🌐 API Resources
 
-- **Star Wars Visual Guide (for images):**
-  [Star Wars Visual Guide](https://starwars-visualguide.com/)
+### SWAPI Endpoints
 
----
+- Starships List: [SWAPI Starships]
+  https://swapi.dev/api/starships/
+  https://swapi.py4e.com/api/starships/
 
-### Notes
+### Image Resources
 
-- **Redux:** Redux is used for state management. [Redux Toolkit Documentation](https://redux-toolkit.js.org/)
+- Star Wars Visual Guide: [Starship Images](https://starwars-visualguide.com/)
+
+## 🧰 State Management
+
+- **Redux:** Centralized state management for consistent data flow
+
+**May the Force be with your code! 🌟**

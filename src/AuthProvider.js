@@ -1,7 +1,7 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { loginSuccess, logout } from "./redux/authSlice";
+import { setUser, logout, checkingComplete } from "./redux/authSlice";
 import { auth } from "./firebaseConfig";
 
 const AuthProvider = ({ children }) => {
@@ -11,7 +11,7 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         dispatch(
-          loginSuccess({
+          setUser({
             uid: user.uid,
             email: user.email,
           })
@@ -19,9 +19,10 @@ const AuthProvider = ({ children }) => {
       } else {
         dispatch(logout());
       }
-      dispatch({ type: "auth/checkingComplete" });
+      dispatch(checkingComplete());
     });
 
+    // Clean up on component unmount
     return () => unsubscribe();
   }, [dispatch]);
 

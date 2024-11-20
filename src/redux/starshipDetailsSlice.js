@@ -18,7 +18,6 @@ export const fetchStarshipDetails = createAsyncThunk(
           const pilotResponse = await axios.get(pilotUrl);
           const pilot = pilotResponse.data;
 
-          // Get the pilot ID from the URL
           const pilotId = pilotUrl.match(/\/people\/(\d+)\//)?.[1];
           return { ...pilot, id: pilotId };
         })
@@ -30,7 +29,6 @@ export const fetchStarshipDetails = createAsyncThunk(
           const filmResponse = await axios.get(filmUrl);
           const film = filmResponse.data;
 
-          // Get the film ID from the URL
           const filmId = filmUrl.match(/\/films\/(\d+)\//)?.[1];
           return { ...film, id: filmId };
         })
@@ -88,8 +86,8 @@ const starshipDetailsSlice = createSlice({
       .addCase(fetchStarshipDetails.pending, (state) => {
         state.loading = true;
         state.error = null;
-        state.pilots = []; // Clear pilots when loading new details
-        state.films = []; // Clear films when loading new details
+        state.pilots = [];
+        state.films = [];
       })
       .addCase(fetchStarshipDetails.fulfilled, (state, action) => {
         state.loading = false;

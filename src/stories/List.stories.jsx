@@ -1,6 +1,5 @@
 import List from "./List";
 
-// Mock data for the elements
 const mockElements = [
   { id: "1", name: "Luke Skywalker" },
   { id: "2", name: "Darth Vader" },

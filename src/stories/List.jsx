@@ -9,7 +9,7 @@ export default function List({ elements, title }) {
         </h1>
         <ul
           role="list"
-          className="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-4"
+          className="mx-auto mt-6 grid max-w-2xl grid-cols-1 w-2/3 sm:w-full gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-4"
         >
           {elements.map((element) => (
             <Card key={element.id} element={element} />

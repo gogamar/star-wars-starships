@@ -1,7 +1,6 @@
 import { MemoryRouter } from "react-router-dom";
 import StarshipList from "./StarshipList";
 
-// Default export with Storybook metadata
 export default {
   title: "Components/StarshipList",
   component: StarshipList,
@@ -14,7 +13,6 @@ export default {
   ],
 };
 
-// Sample data to simulate starships
 const exampleStarships = [
   {
     name: "X-Wing",
@@ -33,5 +31,4 @@ const exampleStarships = [
   },
 ];
 
-// Story for displaying StarshipList with sample data
 export const Default = () => <StarshipList starships={exampleStarships} />;

@@ -12,9 +12,7 @@ describe("Card Component", () => {
 
     render(<Card element={pilotElement} />);
 
-    // Check if the name of the pilot is rendered
     expect(screen.getByText(/luke skywalker/i)).toBeInTheDocument();
-    // Check if the image source URL is correct for a pilot
     const img = screen.getByAltText(/luke skywalker/i);
     expect(img.src).toContain("characters/1.jpg");
   });

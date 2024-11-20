@@ -1,6 +1,5 @@
 import { RocketLaunchIcon } from "@heroicons/react/24/solid";
 import Button from "./Button";
-import "./button.css";
 
 export default {
   title: "Components/Button",

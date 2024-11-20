@@ -5,7 +5,6 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth } from "../firebaseConfig";
-import { onAuthStateChanged } from "firebase/auth";
 import { handleFirebaseError } from "../utils/firebaseErrorUtils";
 
 const initialState = {
@@ -20,37 +19,24 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     resetError: (state) => {
-      state.error = "";
+      state.error = null;
     },
     checkingComplete: (state) => {
       state.checking = false;
     },
-    signupStart: (state) => {
+    startLoading: (state) => {
       state.loading = true;
     },
-    signupSuccess: (state, action) => {
+    stopLoading: (state) => {
       state.loading = false;
+    },
+    setUser: (state, action) => {
       state.user = {
         uid: action.payload.uid,
         email: action.payload.email,
       };
     },
-    signupFailure: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-    loginStart: (state) => {
-      state.loading = true;
-    },
-    loginSuccess: (state, action) => {
-      state.loading = false;
-      state.user = {
-        uid: action.payload.uid,
-        email: action.payload.email,
-      };
-    },
-    loginFailure: (state, action) => {
-      state.loading = false;
+    setError: (state, action) => {
       state.error = action.payload;
     },
     logout: (state) => {
@@ -64,50 +50,27 @@ const authSlice = createSlice({
 export const {
   resetError,
   checkingComplete,
-  signupStart,
-  signupSuccess,
-  signupFailure,
-  loginStart,
-  loginSuccess,
-  loginFailure,
+  startLoading,
+  stopLoading,
+  setUser,
+  setError,
   logout,
 } = authSlice.actions;
 
 export default authSlice.reducer;
 
-// Async thunk for checking user authentication
-export const checkUserAuth = () => async (dispatch) => {
-  dispatch(checkingComplete()); // Optional: show UI as checking auth state
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      dispatch(
-        loginSuccess({
-          uid: user.uid,
-          email: user.email,
-        })
-      );
-    } else {
-      dispatch(logout());
-    }
-    dispatch(checkingComplete());
-  });
-};
-
 // Async thunk for logging in
 export const loginUser =
   (email, password, navigate, from) => async (dispatch) => {
-    dispatch(loginStart());
+    dispatch(startLoading());
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
         password
       );
-
-      navigate(from, { replace: true });
-
       dispatch(
-        loginSuccess({
+        setUser({
           uid: userCredential.user.uid,
           email: userCredential.user.email,
         })
@@ -115,32 +78,34 @@ export const loginUser =
       navigate(from, { replace: true });
     } catch (error) {
       const userFriendlyError = handleFirebaseError(error);
-      dispatch(loginFailure(userFriendlyError));
+      dispatch(setError(userFriendlyError));
+    } finally {
+      dispatch(stopLoading());
     }
   };
 
 // Async thunk for signing up
 export const signupUser =
   (email, password, navigate, from) => async (dispatch) => {
-    dispatch(signupStart());
+    dispatch(startLoading());
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
-
       dispatch(
-        signupSuccess({
+        setUser({
           uid: userCredential.user.uid,
           email: userCredential.user.email,
         })
       );
-
       dispatch(loginUser(email, password, navigate, from));
     } catch (error) {
       const userFriendlyError = handleFirebaseError(error);
-      dispatch(signupFailure(userFriendlyError));
+      dispatch(setError(userFriendlyError));
+    } finally {
+      dispatch(stopLoading());
     }
   };
 

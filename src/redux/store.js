@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+
 import starshipsReducer from "./starshipsListSlice";
 import starshipDetailsReducer from "./starshipDetailsSlice";
 import authReducer from "./authSlice";

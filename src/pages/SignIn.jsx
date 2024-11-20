@@ -14,19 +14,19 @@ const SignIn = () => {
   const { user, loading, error } = useSelector((state) => state.auth);
   const from = location.state?.from?.pathname || "/";
 
-  // Generic field validator
   const validators = {
     email: (value) =>
       /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(value)
         ? ""
         : "Invalid email format.",
-    password: (value) => (value.length > 0 ? "" : "Password cannot be empty."),
+    password: (value) =>
+      value.length > 6 ? "" : "Password must be at least 6 characters long",
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    setFeedback((prev) => ({ ...prev, [name]: "" })); // Clear feedback
+    setFeedback((prev) => ({ ...prev, [name]: "" }));
     dispatch(resetError());
   };
 
@@ -67,7 +67,6 @@ const SignIn = () => {
       </div>
 
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        {/* Reserved space for general error messages */}
         <div className="h-6 my-5">
           {error && (
             <p
@@ -99,7 +98,6 @@ const SignIn = () => {
                   className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-yellow-500 sm:text-sm px-2"
                 />
               </div>
-              {/* Reserved space for field-specific feedback */}
               <div className="h-6">
                 {feedback[field] && (
                   <p

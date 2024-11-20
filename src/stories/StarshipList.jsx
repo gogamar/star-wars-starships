@@ -7,7 +7,6 @@ const StarshipList = ({ starships }) => {
     try {
       const parts = url.split("/").filter((part) => part.length > 0);
       const id = parts[parts.length - 1];
-      // Ensure the ID is numeric
       return /^\d+$/.test(id) ? id : null;
     } catch {
       return null;

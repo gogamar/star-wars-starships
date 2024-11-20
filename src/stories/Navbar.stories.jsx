@@ -3,7 +3,6 @@ import { BrowserRouter } from "react-router-dom";
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 import Navbar from "./Navbar";
 
-// Mock Redux Store Setup
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -37,7 +36,6 @@ const createTestStore = (initialState = {}) => {
   });
 };
 
-// Wrapper component for providing necessary context
 const StoryWrapper = ({ children, initialState }) => {
   const store = createTestStore(initialState);
   return (
@@ -64,7 +62,6 @@ const meta = {
 
 export default meta;
 
-// Stories
 export const LoggedOut = {
   args: {
     initialState: {
