@@ -10,11 +10,13 @@ const Starships = () => {
   const { list, next, loading } = useSelector((state) => state.starships);
 
   const observer = useRef();
+  const hasFetched = useRef(false);
 
   // Fetch starships on initial load
   useEffect(() => {
-    if (!list.length) {
+    if (!list.length && !hasFetched.current) {
       dispatch(fetchStarships(null));
+      hasFetched.current = true;
     }
   }, [dispatch, list.length]);
 

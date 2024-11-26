@@ -9,6 +9,9 @@ export const fetchStarships = createAsyncThunk(
   "starshipsList/fetchStarships",
   async (next, { rejectWithValue }) => {
     try {
+      next
+        ? console.log("Fetching next page...", next)
+        : console.log("Fetching first page...", `${SWAPI_1}?page=1`);
       const response = next
         ? await axios.get(next)
         : await axios.get(`${SWAPI_1}?page=1`);
